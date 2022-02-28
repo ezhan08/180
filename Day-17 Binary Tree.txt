@@ -1,0 +1,426 @@
+Day 17: trees
+
+1. inorder traversal
+
+class Solution {
+private:
+    void dfs(TreeNode* root, vector<int> &inorder){
+        if(root == nullptr) return;
+        dfs(root->left, inorder);
+        inorder.push_back(root->val);
+        dfs(root->right, inorder);
+    }
+    
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> inorder;
+        dfs(root, inorder);
+        return inorder;
+        
+    }
+};
+
+2.preoder traversal
+
+class Solution {
+private:
+    void dfs(TreeNode* root, vector<int> &inorder){
+        if(root == nullptr) return;
+        inorder.push_back(root->val);
+        dfs(root->left, inorder);
+        dfs(root->right, inorder);
+    }
+    
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> inorder;
+        dfs(root, inorder);
+        return inorder;
+        
+    }
+};
+
+3.postorder traversal
+
+class Solution {
+private:
+    void dfs(TreeNode* root, vector<int> &inorder){
+        if(root == nullptr) return;
+        dfs(root->left, inorder);
+        
+        dfs(root->right, inorder);
+        inorder.push_back(root->val);
+    }
+    
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> inorder;
+        dfs(root, inorder);
+        return inorder;
+        
+    }
+};
+
+4.morris inorder
+
+Self notes:
+In-order Morris Traversal:
+🌳 1st case: if left is null, print current node and go right
+🌳 2nd case: before going left, make right most node on left subtree connected to current node, then go left
+🌳 3rd case: if thread is already pointed to current node, then remove the thread
+
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> inorder; 
+        
+        TreeNode* cur = root; 
+        while(cur != NULL) {
+            if(cur->left == NULL) {
+                inorder.push_back(cur->val); 
+                cur = cur->right; 
+            }
+            else {
+                TreeNode* prev = cur->left; 
+                while(prev->right != NULL && prev->right != cur) {
+                    prev = prev->right; 
+                }
+                
+                if(prev->right == NULL) {
+                    prev->right = cur;
+                    cur = cur->left; 
+                }
+                else {
+                    prev->right = NULL; 
+                    inorder.push_back(cur->val); 
+                    cur = cur->right; 
+                }
+            }
+        }
+        return inorder; 
+    }
+};
+
+5.morris preorder
+
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> preorder; 
+        
+        TreeNode* cur = root; 
+        while(cur != NULL) {
+            if(cur->left == NULL) {
+                preorder.push_back(cur->val); 
+                cur = cur->right; 
+            }
+            else {
+                TreeNode* prev = cur->left; 
+                while(prev->right != NULL && prev->right != cur) {
+                    prev = prev->right; 
+                }
+                
+                if(prev->right == NULL) {
+                    prev->right = cur;
+                    preorder.push_back(cur->val); 
+                    cur = cur->left; 
+                }
+                else {
+                    prev->right = NULL;
+                    cur = cur->right; 
+                }
+            }
+        }
+        return preorder; 
+    }
+};
+
+6.left view binary tree
+
+void recursion(Node *root, int level, vector<int> &res){
+    if(root==NULL) return;
+    if(res.size() == level) res.push_back(root->data);
+    //for right view, put right first then left below
+    recursion(root->left, level+1, res);
+    recursion(root->right, level+1, res);
+    
+}
+
+//Function to return a list containing elements of left view of the binary tree.
+vector<int> leftView(Node *root)
+{
+   // Your code here
+   vector<int> res;
+   recursion(root, 0, res);
+   return res;
+}
+
+7. bottom view
+
+    vector <int> bottomView(Node *root) {
+        // Your Code Here
+        vector<int> ans;
+        if(root == NULL) return ans;
+        
+        map<int, int> mp;
+        queue<pair<Node*, int>> q;
+        q.push({root, 0});
+        while(!q.empty()){
+            auto it= q.front();
+            q.pop();
+            Node *node = it.first;
+            int line= it.second;
+            mp[line] = node->data;
+            
+            if(node->left != NULL){
+                q.push({node->left, line -1});
+            }
+            if(node->right != NULL){
+                q.push({node->right, line +1});
+            }
+            
+            
+        }
+        
+        for(auto it : mp){
+            ans.push_back(it.second);
+        }
+        
+         
+        
+        return ans;
+    }
+
+8.   top view 
+ vector<int> topView(Node *root)
+    {
+        //Your code here
+        vector<int> ans;
+        if(root == nullptr) return ans;
+        map<int,int> mp;
+        queue<pair<Node*,int>> q;
+        q.push({root, 0});
+        while(!q.empty()){
+            auto it = q.front();
+            q.pop();
+            Node *node = it.first;
+            int line = it.second;
+            if(mp.find(line)== mp.end()) mp[line] = node->data;
+            
+            if(node->left != nullptr){
+                q.push({node->left, line -1});
+            }
+            
+            if(node->right != nullptr){
+                q.push({node->right, line +1});
+            }
+        }
+        
+        for(auto it: mp){
+            ans.push_back(it.second);
+        }
+        
+        
+        return ans;
+    }
+
+9. all traversals
+
+// LC link : https://leetcode.com/problems/binary-tree-postorder-traversal
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        stack<pair<TreeNode*,int>> st; 
+        st.push({root, 1}); 
+        vector<int> pre, in, post;
+        if(root == NULL) return post;
+
+        while(!st.empty()) {
+            auto it = st.top(); 
+            st.pop(); 
+
+            // this is part of pre
+            // increment 1 to 2 
+            // push the left side of the tree
+            if(it.second == 1) {
+                pre.push_back(it.first->val); 
+                it.second++; 
+                st.push(it); 
+
+                if(it.first->left != NULL) {
+                    st.push({it.first->left, 1}); 
+                }
+            }
+
+            // this is a part of in 
+            // increment 2 to 3 
+            // push right 
+            else if(it.second == 2) {
+                in.push_back(it.first->val); 
+                it.second++; 
+                st.push(it); 
+
+                if(it.first->right != NULL) {
+                    st.push({it.first->right, 1}); 
+                }
+            }
+            // don't push it back again 
+            else {
+                post.push_back(it.first->val); 
+            }
+        } 
+
+        return post; 
+    }
+};
+
+10. vertical order traversal
+
+class Solution {
+public:
+    vector<vector<int>> verticalTraversal(TreeNode* root) {
+        map<int, map<int, multiset<int>>> mp;
+        queue<pair<TreeNode*,pair<int,int>>> q;
+        
+        q.push({root, {0,0}});
+        while(!q.empty()){
+            auto it= q.front();
+            q.pop();
+            TreeNode* node = it.first;
+            int x= it.second.first, y= it.second.second;
+            mp[x][y].insert(node->val);
+            if(node->left){
+                q.push({node->left, {x-1, y+1}});
+            }
+            if(node->right){
+                q.push({node->right, {x+1, y+1}});
+            }
+        }
+        vector<vector<int>> ans;
+        for(auto it: mp){
+            vector<int> cols;
+            for(auto it1: it.second){
+                cols.insert(cols.end(), it1.second.begin(), it1.second.end());
+            }
+            ans.push_back(cols);
+        }
+        
+        
+        return ans;
+        
+    }
+};
+
+11. root to node path in binary tree
+
+bool getPath(TreeNode *root, vector<int> &arr, int x) {
+    // if root is NULL
+    // there is no path
+    if (!root)
+        return false;
+     
+    // push the node's value in 'arr'
+    arr.push_back(root->val);   
+     
+    // if it is the required node
+    // return true
+    if (root->val == x)   
+        return true;
+     
+    // else check whether the required node lies
+    // in the left subtree or right subtree of
+    // the current node
+    if (getPath(root->left, arr, x) ||
+        getPath(root->right, arr, x))
+        return true;
+     
+    // required node does not lie either in the
+    // left or right subtree of the current node
+    // Thus, remove current node's value from
+    // 'arr'and then return false   
+    arr.pop_back();
+    return false;  
+}
+vector<int> Solution::solve(TreeNode* A, int B) {
+    vector<int> arr; 
+    if(A == NULL) {
+        return arr; 
+    }
+    getPath(A, arr, B);
+    return arr; 
+}
+
+12. max width of binary tree
+ 
+not including null (in gfg)
+    // Function to get the maximum width of a binary tree.
+    int getMaxWidth(Node* root) {
+
+        // Your code here
+        queue<Node*>q;
+        int res=0;
+        if(root == nullptr ) return res;
+        q.push({root});
+        while(!q.empty()){
+            int count= q.size();
+            res = max(res, count);
+            for(int i=0; i<count; i++){
+                Node* curr= q.front();
+                q.pop();
+                if(curr->left != nullptr)  q.push({curr->left});
+                if(curr->right != nullptr)  q.push({curr->right});
+                
+            }
+        }
+        return res;
+    }
+
+width including null(leetcode as in striver list)
+
+    int widthOfBinaryTree(TreeNode* root) {
+                if(!root)
+            return 0;
+        int ans = 0;
+        queue<pair<TreeNode*, int>> q;
+        q.push({root,0});
+        while(!q.empty()){
+            int size = q.size();
+            int mmin = q.front().second;    //to make the id starting from zero
+            int first,last;
+            for(int i=0; i<size; i++){
+                int cur_id = q.front().second-mmin;
+                TreeNode* node = q.front().first;
+                q.pop();
+                if(i==0) first = cur_id;
+                if(i==size-1) last = cur_id;
+                if(node->left)
+                    q.push({node->left, cur_id*2+1});
+                if(node->right)
+                    q.push({node->right, cur_id*2+2});
+            }
+            ans = max(ans, last-first+1);
+        }
+        return ans;
+        
+    }
+
+
+
+
+
+
+
+
