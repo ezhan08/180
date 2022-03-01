@@ -2,6 +2,8 @@ Day 17: trees
 
 1. inorder traversal
 
+RECURSIVE
+
 class Solution {
 private:
     void dfs(TreeNode* root, vector<int> &inorder){
@@ -17,6 +19,31 @@ public:
         dfs(root, inorder);
         return inorder;
         
+    }
+};
+
+ITERATIVE
+
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        stack<TreeNode*> st;
+        vector<int> inorder;
+        TreeNode *node =root;
+        while(true){
+            if(node){
+                st.push(node);
+                node = node->left;
+            }
+            else{
+                if(st.empty()) break;
+                node = st.top();
+                st.pop();
+                inorder.push_back(node->val);
+                node = node->right;
+            }
+        }
+        return inorder;
     }
 };
 
