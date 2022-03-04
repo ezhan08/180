@@ -60,5 +60,31 @@ public:
     }
 };
 
+4. atoi
+
+5.strstr
+
+6. longest common prefix
+
+        //The approach heavily depends on the idea of sorting. If we sort a array of strings, the strings get sorted lexographically, which means the strings are sorted according to their character occurrence, so, the first string should be present in all the strings of the sorted array and since the last string in array is very different from every other string and hence it was placed last, so if we find the occurrence of our first string in the last string , we will get the common prefix. that's the idea
+
+
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        sort(strs.begin(), strs.end());
+        int n = strs.size();
+        string a = strs[0];
+        string b = strs[n-1];
+        string res = "";
+        for(int i =0; i< a.size(); i++){
+            if(a[i] == b[i]){
+                res += a[i];
+            }else break;
+        }
+        return res;
+    }
+};
+
 
 
