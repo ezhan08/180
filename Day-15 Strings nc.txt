@@ -1,6 +1,12 @@
 1. Reverse words in a string
 
-
+python
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        return " ".join(reversed(s.split()))
+        
+        
+cpp
 class Solution {
 public:
     string reverseWords(string s) {
