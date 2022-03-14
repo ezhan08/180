@@ -166,7 +166,7 @@ public:
             fact *= i;
             arr.push_back(i);
         }
-        k--;
+        k--; //we are using zero based indexing
         while(arr.size()>0){
             fact = fact/arr.size();
             res += to_string(arr[k/fact]);
