@@ -1,0 +1,31 @@
+1. Subset sums
+
+class Solution
+{
+    
+public:
+    void func(int ind, int sum, vector<int> &arr, int N, vector<int> &ss){
+        if(ind == N){
+            ss.push_back(sum);
+            return;
+        }
+        //pick the element
+        func( ind+1, sum + arr[ind], arr,  N, ss);
+        
+        //do not pick the element
+        func( ind+1,  sum, arr,  N, ss);
+    }
+    
+    
+    
+public:
+    vector<int> subsetSums(vector<int> arr, int N)
+    {
+        // Write Your Code here
+        vector<int> ss;
+        func(0,0,arr, N, ss);
+        sort(ss.begin(), ss.end());
+        
+        return ss;
+    }
+};
