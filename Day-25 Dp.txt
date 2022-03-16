@@ -20,4 +20,25 @@ class Solution:
             res = max(res, maxp)
         return res
         
- 
+2. longest increadsing subsequence
+
+https://leetcode.com/problems/longest-increasing-subsequence/discuss/1326308/C%2B%2BPython-DP-Binary-Search-BIT-Solutions-Picture-explain-O(NlogN)
+
+above link... see solution 2
+
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        vector<int> sub;
+        for (int x: nums){
+            if(sub.empty() || sub[sub.size() - 1] < x){
+                sub.push_back(x);
+            }
+            else{
+                auto it = lower_bound(sub.begin(), sub.end(), x);
+                *it = x;
+            }
+        }
+        return sub.size();
+    }
+};
