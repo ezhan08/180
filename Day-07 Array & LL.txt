@@ -179,7 +179,7 @@ public:
     }
 };
 
-6. max consec 1
+6. max consecutive 1
 
 
 class Solution {
