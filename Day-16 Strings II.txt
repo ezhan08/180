@@ -109,3 +109,22 @@ int Solution::solve(string s) {
     int suff = lps[l-1]; // last index 
     return orgL-suff; // original length - last index of lps array
 }
+
+
+4. check for anagrams
+
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        if(s.size()!=t.size()) return false;
+        unordered_map<char,int> umap;
+        for(char i: s){
+            umap[i]++;
+        }
+        for(char j: t){
+            if(--umap[j]<0)return false;
+        }
+        return true;
+    }
+};
+
