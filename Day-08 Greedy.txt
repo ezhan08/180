@@ -1,7 +1,5 @@
 1. N meetings in one room
 
-class Solution {
-    public:
     int maxMeetings(int start[], int end[], int n) {
         vector<pair<int, int>> timings;
         for(int i = 0; i < n; i++) timings.push_back({start[i], end[i]});
@@ -17,4 +15,3 @@ class Solution {
         }
         return res;
     }
-};
