@@ -69,3 +69,37 @@ int Solution::findMedian(vector<vector<int> > &A) {
     }
     return low; 
 }
+
+3. single element in sorted array
+
+using xor( in O(n) time):
+
+
+class Solution {
+public:
+    int singleNonDuplicate(vector<int>& nums) {
+        int n = nums.size();
+        int res = nums[0];
+        for(int i=1; i<n; i++){
+            res = res^nums[i];
+        }
+        return res;
+    }
+};
+
+using binary search algo
+
+int singleNonDuplicate(vector<int>& nums) {
+        int low = 0, high = nums.size() - 2; 
+        while(low <= high) {
+            int mid = (low + high) >> 1; 
+            if(nums[mid] == nums[mid^1]) {
+                low = mid + 1; 
+            } 
+            else {
+                high = mid - 1; 
+            }
+        }
+        return nums[low]; 
+    }
+
