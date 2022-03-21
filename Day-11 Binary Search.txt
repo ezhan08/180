@@ -204,3 +204,98 @@ int kthElement(int arr1[], int arr2[], int n, int m, int k)
         }
         return 1; 
     }
+    
+    7. allocate minimum pages of books
+    
+    int isPossible(vector<int> &A, int pages, int students) {
+    int cnt = 0;
+    int sumAllocated = 0; 
+    for(int i = 0;i<A.size();i++) {
+        if(sumAllocated + A[i] > pages) {
+            cnt++; 
+            sumAllocated = A[i];
+            if(sumAllocated > pages) return false; 
+        }
+        else {
+            sumAllocated += A[i];
+        }
+    }
+    if(cnt < students) return true; 
+    return false; 
+}
+int Solution::books(vector<int> &A, int B) {
+    if(B > A.size()) return -1; 
+    int low = A[0]; 
+    int high = 0;
+    for(int i = 0;i<A.size();i++) {
+        high = high + A[i]; 
+        low = min(low, A[i]); 
+    }
+    int res = -1; 
+    while(low <= high) {
+        int mid = (low + high) >> 1; 
+        //cout << low << " " << high << " " << mid << endl; 
+        if(isPossible(A, mid, B)) {
+            res = mid; 
+            high = mid - 1; 
+        }
+        else {
+            low = mid + 1; 
+        }
+    }
+    // return res -> this is also correct
+    return low; 
+}
+
+8. Aggressive cows
+
+similar question on leetcode ->
+
+1552. Magnetic Force Between Two Balls
+1870. Minimum Speed to Arrive on Time
+875. Koko Eating Bananas
+1011. Capacity To Ship Packages Within D Days
+1283. Find the Smallest Divisor Given a Threshold
+1482. Minimum Number of Days to Make m Bouquets
+2064. Minimized Maximum of Products Distributed to Any Store
+
+    #include <bits/stdc++.h>
+    using namespace std;
+    bool isPossible(int a[], int n, int cows, int minDist) {
+        int cntCows = 1; 
+        int lastPlacedCow = a[0];
+        for(int i = 1;i<n;i++) {
+            if(a[i] - lastPlacedCow >= minDist) {
+                cntCows++;
+                lastPlacedCow = a[i]; 
+            }
+        }
+        if(cntCows >= cows) return true;
+        return false; 
+    }
+    int main() {
+    	int t;
+    	cin >> t;
+    	while(t--) {
+    	    int n, cows;
+    	    cin >> n >> cows;
+    	    int a[n];
+    	    for(int i = 0;i<n;i++) cin >> a[i]; 
+    	    sort(a,a+n); 
+    	    
+    	    int low = 1, high = a[n-1] - a[0]; 
+    	    
+    	    while(low <= high) {
+    	        int mid = (low + high) >> 1; 
+    	        
+    	        if(isPossible(a,n,cows,mid)) {
+    	            low = mid + 1;
+    	        }
+    	        else {
+    	            high = mid - 1; 
+    	        }
+    	    }
+    	    cout << high << endl; 
+    	}
+    	return 0;
+    } 
