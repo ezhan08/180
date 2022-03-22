@@ -45,6 +45,13 @@ public:
 
 3. Longest common subsequence
 
+
+NOTE:
+tabulation = bottom up
+memoization = top down
+
+the below code is bottom up approach
+
 class Solution {
 public:
     int longestCommonSubsequence(string text1, string text2) 
@@ -76,3 +83,35 @@ public:
         return dp[n][m];
     }
 };
+
+4. 0/1 knapsack
+
+Read this first:
+
+https://leetcode.com/problems/ones-and-zeroes/discuss/814077/Dedicated-to-Beginners
+
+the below approach is bottom up
+
+class Solution {
+public:
+    int findMaxForm(vector<string>& strs, int m, int n) {
+                int i,j,k,l,p=strs.size();
+        vector<vector<int>> dp(m+1 , vector<int>(n+1));
+        
+        for(auto &s:strs)
+        {
+            int x = count(s.begin(),s.end(),'1');
+            int y = s.size()-x;
+            
+            for(i=m;i>=y;i--)
+            {
+                for(j=n;j>=x;j--)
+                {
+                    dp[i][j] = max(dp[i][j],1+dp[i-y][j-x]);
+                }
+            }
+        }
+        return dp[m][n];
+    }
+};
+
