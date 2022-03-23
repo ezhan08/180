@@ -153,3 +153,11 @@ public:
         return dp[n1][n2];
     }
 };
+
+6. maximum sum increasing subsequence
+
+
+7. matrix chain multiplication
+
+
+
