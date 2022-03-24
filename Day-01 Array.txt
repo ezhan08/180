@@ -98,7 +98,7 @@ public:
 };
 
 
-6. stock buy and sell
+6. Stock buy and sell
 
 class Solution {
 public:
