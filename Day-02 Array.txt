@@ -64,5 +64,26 @@ public:
 
 //see gfg netlify 450 dsa for even efficient
 
+4. find duplicate in an array of N+1 Integers Solution
+
+    int findDuplicate(vector<int>& nums) {
+        int slow = nums[0],fast = nums[0];
+//         In this loop we will find the collision point
+        do{
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+                    }
+        while(slow != fast);
+        
+//         fast will be intizialized to the starting point 
+        fast = nums[0];
+        
+        while(slow != fast){
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        return slow ;
+ 
+    }
 
 
