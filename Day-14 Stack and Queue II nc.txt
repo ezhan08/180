@@ -90,3 +90,58 @@ public:
         return ans;
     }
 };
+
+6. Implement min stack
+
+class MinStack {
+    typedef long long ll;
+    stack<ll> st;
+    ll mini;
+    
+public:
+    MinStack() {
+        if(!st.empty() )st.pop();
+        mini = INT_MAX;
+        
+    }
+    
+    void push(int val) {
+        ll value = val;
+        if(st.empty()){
+            mini = value;
+            st.push(value);
+        }else{
+            if(value<mini){
+            st.push(2*value*1LL - mini);
+            mini = value;
+        }else{
+            st.push(value);
+        }
+        }
+        
+        
+    }
+    
+    void pop() {
+        if(st.empty()) return;
+        ll el = st.top();
+        st.pop();
+        if(el < mini){
+            mini =2* mini - el;
+        }
+        
+    }
+    
+    int top() {
+        if(st.empty())return -1;
+        ll el = st.top();
+        if(el < mini) return mini;
+        return el;
+        
+    }
+    
+    int getMin() {
+        return mini;
+    }
+};
+
