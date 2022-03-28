@@ -43,6 +43,9 @@ class LRUCache:
             
    3. LFU cache
    
+   //after watching striver video, see below code
+   
+   https://leetcode.com/problems/lfu-cache/discuss/207673/Python-concise-solution-**detailed**-explanation%3A-Two-dict-%2B-Doubly-linked-list
    
    
    4. largest rectangle in histogram
