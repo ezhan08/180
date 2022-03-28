@@ -214,7 +214,8 @@ public:
     }
 };
 
-9.
+9. promotion...so skipped
+
 
 
 10. celebrity problem
