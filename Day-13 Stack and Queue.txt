@@ -1,5 +1,5 @@
 1. Implement stack using array
-see gfg spc video first then striver
+see gfg spc video first then striverr
 
 public:
     Stack() {
