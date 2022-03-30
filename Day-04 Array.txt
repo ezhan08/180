@@ -81,3 +81,28 @@ public:
         return res;
     }
 };
+
+3. longest consecutive sequence
+
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        unordered_set<int> s;
+        for(int num: nums){
+            s.insert(num);
+        }
+        int longest =0;
+        for(int num:nums){
+            if(!s.count(num-1)){
+                int clongest = 1;
+                int cnum = num;
+                while(s.count(cnum+1)){
+                    cnum++;
+                    clongest++;
+                }
+                longest = max(longest, clongest);
+            }
+        }
+        return longest;
+    }
+};
