@@ -48,3 +48,23 @@ public:
         return result;
     }
 };
+
+4. Remove nth node from back of ll
+
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode * start = new ListNode();
+        start->next = head;
+        ListNode* first = start, *second = start;
+        for(int i=1;i<=n;i++){
+            first = first->next;
+        }
+        while(first->next != NULL){
+            second = second->next;
+            first = first->next;
+        }
+        second->next = second->next->next;
+        return start->next;
+    }
+};
