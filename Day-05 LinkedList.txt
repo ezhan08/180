@@ -1,4 +1,4 @@
-1. reverse a ll
+1. reverse a ll:
 
 class Solution {
 public:
