@@ -28,3 +28,31 @@ public:
         return false;
     }
 };
+
+3. reverse a ll in groups of size k
+
+(see gfg must do for slight variation of problem statement)
+
+
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode* cursor= head;
+        for(int i=0;i<k;i++){
+            if(!cursor) return head;
+            cursor= cursor->next;
+        }
+        
+        ListNode* curr=head, *prev=NULL, *next=NULL;
+        for(int i=0;i<k;i++){
+            next = curr->next;
+            curr->next = prev;
+            prev= curr;
+            curr = next;
+            
+        }
+        head->next= reverseKGroup(curr, k);
+        return prev;
+    }
+};
+
