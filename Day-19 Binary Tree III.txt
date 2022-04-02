@@ -1,0 +1,20 @@
+1. max path sum
+
+class Solution {
+    
+public:
+    
+    int maxfunc(TreeNode* node, int &maxi){
+        if(!node)return 0;
+        int left = max(0, maxfunc(node->left, maxi));
+        int right = max(0, maxfunc(node->right, maxi));
+        maxi = max(maxi, node->val + left + right);
+        return node->val + max(left, right);
+    }
+    
+    int maxPathSum(TreeNode* root) {
+        int maxi = INT_MIN;
+        maxfunc(root, maxi);
+        return maxi;
+    }
+};
