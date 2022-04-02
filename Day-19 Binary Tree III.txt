@@ -112,3 +112,40 @@ public:
 		}
     }
 };
+
+6. mirror tree
+
+recursive;:
+
+
+class Solution {
+  public:
+    // Function to convert a binary tree into its mirror tree.
+    void mirror(Node* node) {
+        // code here
+        if(!node) return;
+        mirror(node->left);
+        mirror(node->right);
+        swap(node->left, node->right);
+    }
+};
+
+
+iterative:
+
+void mirror(Node* node) {
+        // code here
+        queue<Node*> q;
+        q.push(node);
+        while(!q.empty()){
+            Node* ans=q.front();
+            q.pop();
+            swap(ans->left,ans->right);
+            if(ans->left){
+                q.push(ans->left);
+            }
+            if(ans->right){
+                q.push(ans->right);
+            }
+        }
+    }
