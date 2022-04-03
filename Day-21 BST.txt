@@ -69,3 +69,35 @@ public:
         return -1;
     }
 };
+
+4. kth largest element in bst
+
+I think Kth largest element can be done in single traversal. By using reverse inorder traversal i.e.(Right-Node-Left) .Then we can easily figure out kth largest element in single traversal.
+
+class Solution
+{
+    public:
+    int kthLargest(Node *root, int K)
+    {
+        //Your code here
+        stack<Node*> st;
+        Node* node = root;
+        int count =0;
+        while(true){
+            if(node){
+                st.push(node);
+                node = node->right;
+            }else{
+                if(st.empty())break;
+                node = st.top();
+                st.pop();
+                count++;
+                if(count == K){
+                    return node->data;
+                }
+                node = node->left;
+            }
+        }
+        return -1;
+    }
+};
