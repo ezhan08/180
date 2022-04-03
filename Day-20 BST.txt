@@ -75,3 +75,19 @@ public:
         return build(preorder, i, INT_MAX);
     }
 };
+
+5. check for bst
+
+class Solution {
+public:
+    bool isval(TreeNode* root, long max, long min){
+        if(!root) return true;
+        if ( root->val >= max || root->val<=min ) return false;
+        return isval(root->left, root->val, min) && isval(root->right, max, root->val);
+    }
+    
+    
+    bool isValidBST(TreeNode* root) {
+        return isval(root, LONG_MAX, LONG_MIN);
+    }
+};
