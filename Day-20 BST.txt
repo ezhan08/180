@@ -108,3 +108,39 @@ public:
         return root;
     }
 };
+
+7. inorder predecessor / successor
+
+void succ(Node* root, Node*&suc, int key){
+    while(root){
+        if(key>=root->key){
+            root = root->right;
+        }else{
+            suc = root;
+            root = root->left;
+        }
+    }
+}
+
+void pred(Node* root, Node*&pre, int key){
+    while(root){
+        if(key<=root->key){
+            
+            root = root->left;
+        }else{
+            pre = root;
+            root = root->right;
+        }
+    }
+}
+
+void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
+{
+
+// Your code goes here
+pred(root, pre, key);
+succ(root, suc, key);
+
+
+
+}
