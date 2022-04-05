@@ -362,3 +362,38 @@ class Solution
 	    return topo;
 	}
 };
+
+
+10. number of islands
+
+class Solution {
+    void check(vector<vector<char>>&g, int i, int j, int rows, int cols ){
+        if(i<0||i>=rows|| j<0 || j>=cols || g[i][j] != '1') return;
+        
+        g[i][j] = '2';
+        
+        int r[] = {1,-1, 0,0};
+        int c[] = {0,0,1,-1};
+        
+        for(int k=0;k<4;k++){
+            check(g, i + r[k], j+c[k], rows, cols);
+        }
+    }
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        int rows= grid.size();
+        if(rows == 0) return 0;
+        int cols = grid[0].size();
+        
+        int num = 0;
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                if(grid[i][j] == '1'){
+                    check(grid, i, j, rows, cols);
+                    num += 1;
+                }
+            }
+        }
+        return num;
+    }
+};
