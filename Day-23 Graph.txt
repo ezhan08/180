@@ -195,4 +195,35 @@ GFG
 
 https://practice.geeksforgeeks.org/problems/detect-cycle-in-a-directed-graph/1
 
-
+class Solution {
+    
+    bool checkdfs(int node, vector<int> adj[], int vis[], int dfsvis[]){
+        vis[node] = 1;
+        dfsvis[node] = 1;
+        for(auto it: adj[node]){
+            if(!vis[it]){
+                if(checkdfs(it, adj, vis, dfsvis)) return true;
+            }else if(dfsvis[it]){
+                return true;
+            }
+            
+        }
+        dfsvis[node] = 0;
+        return false;
+    }
+    
+  public:
+    // Function to detect cycle in a directed graph.
+    bool isCyclic(int V, vector<int> adj[]) {
+        // code here
+        int vis[V], dfsvis[V];
+        memset(vis, 0, sizeof vis);
+        memset(dfsvis, 0, sizeof dfsvis);
+        for(int i=0;i<V;i++){
+            if(!vis[i]){
+                if(checkdfs(i, adj, vis, dfsvis)) return true;
+            }
+        }
+        return false;
+    }
+};
