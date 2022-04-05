@@ -152,6 +152,11 @@ public:
 
 5. detect a cycle in undirected graph using dfs
 
+
+GFG
+
+https://practice.geeksforgeeks.org/problems/detect-cycle-in-an-undirected-graph/1
+
  // o- based indexing code
 
 
@@ -183,3 +188,11 @@ public:
 	    return false; 
 	}
 };
+
+6. detect cycle in directed graph using dfs
+
+GFG
+
+https://practice.geeksforgeeks.org/problems/detect-cycle-in-a-directed-graph/1
+
+
