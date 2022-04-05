@@ -397,3 +397,116 @@ public:
         return num;
     }
 };
+
+11. bipartite check using bfs
+
+GFG
+
+
+https://practice.geeksforgeeks.org/problems/bipartite-graph/1#
+
+class Solution {
+    
+    bool check(int src, vector<int>adj[], int color[]){
+        queue<int> q;
+        q.push(src);
+        color[src] = 1;
+        while(!q.empty()){
+            int node = q.front();
+            q.pop();
+            for(auto it: adj[node]){
+                if(color[it] == -1){
+                    color[it] = 1- color[node];
+                    q.push(it);
+                }else if(color[it] == color[node]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+public:
+	bool isBipartite(int V, vector<int>adj[]){
+	    // Code here
+	    int color[V];
+	    memset(color, -1, sizeof color);
+	    for(int i=0;i<V;i++){
+	        if(color[i]==-1){
+	            if(!check(i, adj, color)){
+	                return false;
+	            }
+	        }
+	    }
+	    return true;
+	}
+
+};
+
+Leetcode
+
+  bool isBipartite(vector<vector<int>>& graph) {
+    int n = graph.size();
+    vector<int> color(n); // 0: uncolored; 1: color A; -1: color B
+        
+    queue<int> q; // queue, resusable for BFS    
+	
+    for (int i = 0; i < n; i++) {
+      if (color[i]) continue; // skip already colored nodes
+      
+      // BFS with seed node i to color neighbors with opposite color
+      color[i] = 1; // color seed i to be A (doesn't matter A or B) 
+      for (q.push(i); !q.empty(); q.pop()) {
+        int cur = q.front();
+        for (int neighbor : graph[cur]) 
+		{
+          if (!color[neighbor]) // if uncolored, color with opposite color
+          { color[neighbor] = -color[cur]; q.push(neighbor); } 
+		  
+          else if (color[neighbor] == color[cur]) 
+            return false; // if already colored with same color, can't be bipartite!
+        }        
+      }
+    }
+    
+    return true;
+  }
+  
+  
+  12. bipartite check using dfs
+
+GFG
+
+
+https://practice.geeksforgeeks.org/problems/bipartite-graph/1#
+
+
+class Solution {
+    bool checkdfs(int src, int color[], vector<int> adj[] ){
+        for(auto it: adj[src]){
+            if(color[it] == -1){
+                color[it] = 1 - color[src];
+                if(!checkdfs(it, color, adj)) return false;
+            }
+            else if(color[it] == color[src]) return false;
+        }
+        return true;
+    }
+public:
+	bool isBipartite(int V, vector<int>adj[]){
+	    // Code here
+	    int color[V];
+	    memset(color, -1, sizeof color);
+	    for(int i=0;i<V;i++){
+	        if(color[i]==-1){
+	            if(!checkdfs(i, color, adj))return false;
+	        }
+	    }
+	    return true;
+	}
+
+};
+
+
+
+
+
