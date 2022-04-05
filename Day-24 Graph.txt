@@ -100,3 +100,33 @@ class Solution
         return dist;
     }
 };
+
+3. Bellman ford algo
+
+class Solution{
+	public:
+	/*  Function to implement Dijkstra
+    *   adj: vector of vectors which represents the graph
+    *   S: source vertex to start traversing graph with
+    *   V: number of vertices
+    */
+    vector <int> bellman_ford(int V, vector<vector<int>> adj, int S) {
+        // Code here
+        vector<int> distance(V, 100000000), empty;
+        distance[S] = 0;
+        for(int i=1;i<=V-1;i++){
+            for(auto it: adj){
+                if(distance[it[0]] + it[2] < distance[it[1]]){
+                    distance[it[1]] = distance[it[0]] + it[2];
+                }
+            }
+        }
+        
+        for(auto it: adj){
+            if(distance[it[0]] + it[2] < distance[it[1]]){
+                return empty;
+            }
+        }
+        return distance;
+    }
+};
