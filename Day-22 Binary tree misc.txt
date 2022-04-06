@@ -34,4 +34,34 @@ https://www.youtube.com/watch?v=WVFk9DwRgpY&ab_channel=CodeLibrary-byYogesh%26Sh
 
 Code:
 
+class Solution
+{
+    void solve(Node* root, Node* &head, Node* &curr, int &f){
+        if(!root)return;
+        solve(root->left, head, curr, f);
+        if(f==0){
+            f=1;
+            head= root;
+            curr = root;
+        }else{
+            curr->right = root;
+            curr->right->left = curr;
+            curr = curr->right;
+        }
+        
+        solve(root->right, head, curr, f);
+    }
+    public: 
+    //Function to convert binary tree to doubly linked list and return it.
+    Node * bToDLL(Node *root)
+    {
+        // your code here
+        Node* head = NULL;
+        Node* curr= NULL;
+        int f=0;
+        solve(root, head, curr, f);
+        return head;
+        
+    }
+};
 
