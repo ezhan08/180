@@ -165,3 +165,80 @@ class Solution
         
     }
 };
+
+6. word break
+
+LC link
+
+https://leetcode.com/problems/word-break/
+
+https://www.youtube.com/watch?v=th4OnoGasMU&ab_channel=TECHDOSE
+
+memoization code:
+
+class Solution {
+public:
+    unordered_set<string> set;
+    unordered_map<int,bool> mp;
+    
+    bool solve(string s, int pos){
+        if(s.size()== pos) return true;
+        if(mp.count(pos)) return mp[pos];
+        
+        for(int i=pos;i<s.size();i++){
+            if(set.count(s.substr(pos, i-pos+1)) and solve(s, i+1)){
+               return mp[pos]= true;
+            }
+        }
+        return mp[pos] = false;
+    }
+    
+    
+    bool wordBreak(string s, vector<string>& wordDict) {
+        for(auto str: wordDict){
+            set.insert(str);
+            
+        }
+        return solve(s,0);
+    }
+};
+
+//Approach-2: Tabulation DP
+
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        int n = s.size();
+        bool dp[n+1][n+1];
+        
+        unordered_set<string> myset;
+        for(auto word: wordDict)
+            myset.insert(word);
+        
+        for(int length=1;length<=n;++length) //Window Size
+        {
+            int start = 1;
+            int end = length;
+            while(end<=n) //Sliding Window
+            {
+                string temp = s.substr(start-1,length);
+                if(myset.find(temp)!=myset.end())
+                    dp[start][end] = true;
+                else
+                {
+                    bool flag = false;
+                    for(int i=start;i<end;++i)
+                        if(dp[start][i] and dp[i+1][end])
+                        {
+                            flag = true;
+                            break;
+                        }
+                    dp[start][end] = flag;
+                }
+                start += 1;
+                end += 1;
+            }
+        }
+        return dp[1][n];
+    }
+};
