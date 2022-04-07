@@ -282,3 +282,11 @@ public:
        return calc(str,0,str.length()-1);
    }
 };
+
+8. maximum profit in job scheduling
+
+DONT CLICK ON LINK IN SHEET. THAT BELONGS TO GREEDY ALGO. click on below lc link.
+
+https://leetcode.com/problems/maximum-profit-in-job-scheduling/
+
+
