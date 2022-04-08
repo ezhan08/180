@@ -22,24 +22,22 @@ class Solution:
         
 2. longest increadsing subsequence
 
-https://leetcode.com/problems/longest-increasing-subsequence/discuss/1326308/C%2B%2BPython-DP-Binary-Search-BIT-Solutions-Picture-explain-O(NlogN)
-
-above link... see solution 2
+https://www.youtube.com/watch?v=mouCn3CFpgg&ab_channel=TECHDOSE
 
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
-        vector<int> sub;
-        for (int x: nums){
-            if(sub.empty() || sub[sub.size() - 1] < x){
-                sub.push_back(x);
-            }
-            else{
-                auto it = lower_bound(sub.begin(), sub.end(), x);
-                *it = x;
+        int n= nums.size();
+        vector<int> lis(n,1);
+        
+        for(int i=1;i<n;i++){
+            for(int j=0;j<i;j++){
+                if(nums[i] > nums[j] && lis[i] < lis[j] + 1){
+                    lis[i]++;
+                }
             }
         }
-        return sub.size();
+        return *max_element(lis.begin(), lis.end());
     }
 };
 
@@ -156,6 +154,34 @@ public:
 
 6. maximum sum increasing subsequence
 
+https://www.youtube.com/watch?v=R7DrJsTkK8w&t=405s&ab_channel=TECHDOSE
+
+class Solution{
+		
+
+	public:
+	int maxSumIS(int arr[], int n)  
+	{  
+	    // Your code goes here
+	    int i,j, maxi=0;
+	    int msis[n];
+	    for(int i=0;i<n;i++){
+	        msis[i] = arr[i];
+	    }
+	    
+	    for(i=1;i<n;i++){
+	        for(j=0;j<i;j++){
+	            if(arr[i]>arr[j] && msis[i] < msis[j] + arr[i]){
+	                msis[i] = msis[j] + arr[i];
+	            }
+	        }
+	    }
+	    for(i=0;i<n;i++){
+	        maxi = max(maxi, msis[i]);
+	    }
+	    return maxi;
+	}  
+};
 
 7. matrix chain multiplication
 
