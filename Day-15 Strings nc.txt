@@ -49,6 +49,26 @@ public:
     }
 };
 
+below is the same code but better understandable
+
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int start=0, maxlen=0;
+        int l=0, r=0;
+        int n= s.length();
+        if(n<2)return s;
+        for(int i=0;i<n-1;){
+            l=i, r=i;
+            while(r<n && s[r]==s[r+1])r++;
+            i = r + 1;
+            while(l>=0 && r<n && s[l]==s[r])l--,r++;
+            if(maxlen < r -l -1) maxlen = r-l-1, start = l + 1;
+        }
+        return s.substr(start, maxlen);
+    }
+};
+
 3. roman to integer
 
 class Solution {
