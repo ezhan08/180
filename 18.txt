@@ -1,0 +1,208 @@
+1.level order traversal in spiral form
+
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> ans;
+        if(!root)return ans;
+        queue<TreeNode*> q;
+        q.push({root});
+        while(!q.empty()){
+            int size=q.size();
+            vector<int> level;
+            for(int i=0;i<size;i++){
+                TreeNode* node= q.front();
+                q.pop();
+                if(node->left)q.push(node->left);
+                if(node->right)q.push(node->right);
+                level.push_back(node->val);
+            }
+            ans.push_back(level);
+        }
+        
+        
+        
+        return ans;
+        
+    }
+};
+
+2.height of a binary tree
+
+class Solution {
+public:
+    int maxDepth(TreeNode* root) {
+        if(!root) return 0;
+        int lh= maxDepth(root->left);
+        int rh= maxDepth(root->right);
+        return 1+max(lh,rh);
+        
+    }
+};
+
+3. diameter of binary tree
+
+class Solution {
+private:
+    int dia(TreeNode* root, int &diameter){
+        if(!root) return 0;
+        int lh= dia(root->left, diameter);
+        int rh = dia(root->right, diameter);
+        diameter = max(diameter, lh+rh);
+        return 1+max(lh,rh);
+    }
+public:
+    int diameterOfBinaryTree(TreeNode* root) {
+        int diameter=0;
+        dia(root, diameter);
+        return diameter;
+        
+    }
+};
+
+4. balanced binary tree
+
+class Solution {
+public:
+   int height(TreeNode* root){
+       if(!root) return 0;
+       int lh=height(root->left);
+       if(lh==-1)return -1;
+       
+       
+       int rh=height(root->right);
+       if(rh==-1)return -1;
+       
+       if(abs(lh-rh) > 1){return -1;}
+       
+       return 1+max(lh,rh);
+             
+    }
+    
+    bool isBalanced(TreeNode* root) {
+        return height(root) != -1;
+     
+        
+    }
+    
+};
+
+5. LCA in binary tree
+
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(!root||p==root||q==root)return root;
+        TreeNode* l=lowestCommonAncestor(root->left, p, q);
+        TreeNode* r= lowestCommonAncestor(root->right, p,q);
+        if(!l)return r;
+        else if(!r) return l;
+        else return root;
+    }
+};
+
+6. is same tree
+
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        if(!p) return !q;
+        if(!q) return !p;
+        return (p->val == q->val) && isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+        
+    }
+};
+
+7. zig zig traversal of binary tree
+
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        vector<vector<int>> ans;
+        if(!root) return ans;
+        
+        queue<TreeNode*> q;
+        q.push(root);
+        bool lefttoright= true;
+        while(!q.empty()){
+            int size= q.size();
+            vector<int> row(size);
+            for(int i=0;i<size;i++){
+                TreeNode* node= q.front();
+                q.pop();
+                int index = lefttoright ? i : size -1-i;
+                row[index] = node->val;
+                if(node->left) q.push(node->left);
+                if(node->right) q.push(node->right);                
+            }
+            lefttoright = !lefttoright;
+            ans.push_back(row);            
+        }                
+        return ans;        
+    }
+};
+
+8. boundary traversal 
+
+class Solution {
+    bool isLeaf(Node* root) {
+        return !root->left && !root->right;
+    }
+    
+    void addLeftBoundary(Node* root, vector<int> &res) {
+        Node* cur = root->left;
+        while (cur) {
+            if (!isLeaf(cur)) res.push_back(cur->data);
+            if (cur->left) cur = cur->left;
+            else cur = cur->right;
+        }
+    }
+    void addRightBoundary(Node* root, vector<int> &res) {
+        Node* cur = root->right;
+        vector<int> tmp;
+        while (cur) {
+            if (!isLeaf(cur)) tmp.push_back(cur->data);
+            if (cur->right) cur = cur->right;
+            else cur = cur->left;
+        }
+        for (int i = tmp.size()-1; i >= 0; --i) {
+            res.push_back(tmp[i]);
+        }
+    }
+    
+    void addLeaves(Node* root, vector<int>& res) {
+        if (isLeaf(root)) {
+            res.push_back(root->data);
+            return;
+        }
+        if (root->left) addLeaves(root->left, res);
+        if (root->right) addLeaves(root->right, res);
+    }
+public:
+    vector <int> printBoundary(Node *root)
+    {
+        vector<int> res;
+        if (!root) return res;
+
+        if (!isLeaf(root)) res.push_back(root->data);
+
+        addLeftBoundary(root, res); 
+        
+        // add leaf nodes
+        addLeaves(root, res);
+
+        addRightBoundary(root, res); 
+        return res;
+    }
+};
+
+9. invert binary tree
+
+TreeNode* invertTree(TreeNode* root) {
+    if (root) {
+        invertTree(root->left);
+        invertTree(root->right);
+        std::swap(root->left, root->right);
+    }
+    return root;
+}
