@@ -378,6 +378,7 @@ class Solution {
 public:
     vector<vector<int>> verticalTraversal(TreeNode* root) {
         map<int, map<int, multiset<int>>> mp;
+        //above structure- first int is 'vertical', second int is 'level', and multiset is 'set of node values'
         queue<pair<TreeNode*,pair<int,int>>> q;
         
         q.push({root, {0,0}});
@@ -451,30 +452,46 @@ vector<int> Solution::solve(TreeNode* A, int B) {
 12. max width of binary tree
  
 not including null (in gfg)
+
+https://practice.geeksforgeeks.org/problems/maximum-width-of-tree/1
+
+    
+    class Solution {
+  public:
     // Function to get the maximum width of a binary tree.
     int getMaxWidth(Node* root) {
 
         // Your code here
+        if(!root)return 0;
+        int ans=0;
         queue<Node*>q;
-        int res=0;
-        if(root == nullptr ) return res;
         q.push({root});
         while(!q.empty()){
-            int count= q.size();
-            res = max(res, count);
-            for(int i=0; i<count; i++){
-                Node* curr= q.front();
+            int count = q.size();
+            
+            for(int i=0;i<count;i++){
+                Node* curr = q.front();
                 q.pop();
-                if(curr->left != nullptr)  q.push({curr->left});
-                if(curr->right != nullptr)  q.push({curr->right});
-                
+                if(curr->left){
+                    q.push({curr->left});
+                }
+                if(curr->right){
+                    q.push({curr->right});
+                }
             }
+            
+            ans = max(ans, count);
         }
-        return res;
+        
+        return ans;
     }
+};
+
 
 width including null(leetcode as in striver list)
 
+class Solution {
+public:
     int widthOfBinaryTree(TreeNode* root) {
                 if(!root)
             return 0;
@@ -483,10 +500,10 @@ width including null(leetcode as in striver list)
         q.push({root,0});
         while(!q.empty()){
             int size = q.size();
-            int mmin = q.front().second;    //to make the id starting from zero
+            long long mmin = q.front().second;    //to make the id starting from zero
             int first,last;
             for(int i=0; i<size; i++){
-                int cur_id = q.front().second-mmin;
+                long long cur_id = q.front().second-mmin;
                 TreeNode* node = q.front().first;
                 q.pop();
                 if(i==0) first = cur_id;
@@ -501,6 +518,7 @@ width including null(leetcode as in striver list)
         return ans;
         
     }
+};
 
 
 
