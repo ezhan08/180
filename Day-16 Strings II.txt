@@ -1,5 +1,7 @@
 1. Z function
 
+https://www.youtube.com/watch?v=z2pcwg82rOE&ab_channel=ParasSaini
+
 class Solution {
 public:
     int strStr(string haystack, string needle) {
@@ -21,6 +23,8 @@ public:
 };
 
 2. kmp algo/lps
+
+see self paced course video
 
 class Solution {
   private:
