@@ -106,10 +106,10 @@ public:
 class Solution {
 public:
     bool isSameTree(TreeNode* p, TreeNode* q) {
-        if(!p) return !q;
-        if(!q) return !p;
-        return (p->val == q->val) && isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
-        
+        if(!p || !q){
+            return p==q;
+        }
+        return (p->val == q->val) && isSameTree(p->left,q->left) && isSameTree(p->right,q->right);
     }
 };
 
@@ -143,6 +143,8 @@ public:
 };
 
 8. boundary traversal 
+
+https://practice.geeksforgeeks.org/problems/boundary-traversal-of-binary-tree/1#
 
 class Solution {
     bool isLeaf(Node* root) {
@@ -179,7 +181,7 @@ class Solution {
         if (root->right) addLeaves(root->right, res);
     }
 public:
-    vector <int> printBoundary(Node *root)
+    vector <int> boundary(Node *root)
     {
         vector<int> res;
         if (!root) return res;
@@ -197,6 +199,8 @@ public:
 };
 
 9. invert binary tree
+
+https://leetcode.com/problems/invert-binary-tree/
 
 TreeNode* invertTree(TreeNode* root) {
     if (root) {
