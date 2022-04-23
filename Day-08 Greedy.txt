@@ -118,34 +118,23 @@ double fractionalKnapsack(int W, Item arr[], int n)
     5. minimum no of coins
     
     
-    https://www.geeksforgeeks.org/greedy-algorithm-to-find-minimum-number-of-coins/
+    https://practice.geeksforgeeks.org/problems/-minimum-number-of-coins4426/1/#
     
-    // All denominations of Indian Currency
-int deno[] = { 1, 2, 5, 10, 20,
-               50, 100, 500, 1000 };
-int n = sizeof(deno) / sizeof(deno[0]);
-  
-void findMin(int V)
-{
-    sort(deno, deno + n);
-  
-    // Initialize result
-    vector<int> ans;
-  
-    // Traverse through all denomination
-    for (int i = n - 1; i >= 0; i--) {
-  
-        // Find denominations
-        while (V >= deno[i]) {
-            V -= deno[i];
-            ans.push_back(deno[i]);
+    class Solution{
+public:
+    int deno[10] = { 1, 2, 5, 10, 20, 50, 100, 200, 500, 2000 };
+    int n = sizeof(deno) / sizeof(deno[0]);
+    vector<int> minPartition(int V)
+    {
+        // code here
+        vector<int> ans;
+        for(int i=n-1;i>=0;i--){
+            while(deno[i]<=V){
+                V-= deno[i];
+                ans.push_back(deno[i]);
+            }
         }
+        return ans;
     }
-  
-    // Print result
-    for (int i = 0; i < ans.size(); i++)
-        cout << ans[i] << " ";
-}
-
 
 6. same as 1st problem.... solution same.
