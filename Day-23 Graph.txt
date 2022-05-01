@@ -198,34 +198,31 @@ https://practice.geeksforgeeks.org/problems/detect-cycle-in-a-directed-graph/1
 
 class Solution {
     
-    bool checkdfs(int node, vector<int> adj[], int vis[], int dfsvis[]){
-        vis[node] = 1;
-        dfsvis[node] = 1;
-        for(auto it: adj[node]){
+    bool checkd(int node, vector<int>&vis, vector<int>&dvis, vector<int>adj[]){
+        vis[node]=1;
+        dvis[node]=1;
+        for(auto it: adj[node] ){
             if(!vis[it]){
-                if(checkdfs(it, adj, vis, dfsvis)) return true;
-            }else if(dfsvis[it]){
+                vis[it] = 1;
+                if(checkd(it, vis, dvis, adj))return true;
+            }else if(dvis[it]){
                 return true;
             }
-            
         }
-        dfsvis[node] = 0;
+        dvis[node]=0;
         return false;
     }
-    
   public:
     // Function to detect cycle in a directed graph.
     bool isCyclic(int V, vector<int> adj[]) {
         // code here
-        int vis[V], dfsvis[V];
-        memset(vis, 0, sizeof vis);
-        memset(dfsvis, 0, sizeof dfsvis);
+        vector<int> vis(V,0);
+        vector<int> dvis(V,0);
         for(int i=0;i<V;i++){
             if(!vis[i]){
-                if(checkdfs(i, adj, vis, dfsvis)) return true;
+                if(checkd(i,vis,dvis,adj))return true;
             }
-        }
-        return false;
+        }return false;
     }
 };
 
@@ -362,6 +359,45 @@ class Solution
 	    return topo;
 	}
 };
+
+9.Main course schedule problem on leetcode as in striver sheet;
+-have solved using kahns algo(topological sort-bfs)
+
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        
+        vector<int> indegree(numCourses, 0);
+        vector<vector<int>> adj(numCourses); //this is basically creating that dependency of if 'a' course is taken then 'b'  should already be taken.
+        
+        for(auto i: prerequisites) {
+            adj[i[1]].push_back(i[0]);
+            indegree[i[0]]++;
+        }
+        
+        queue<int> q;
+        //vector<int> res;
+        
+        for (int i=0; i< indegree.size(); i++) {
+            if (indegree[i] == 0)
+                q.push(i);
+        }
+        
+        while (!q.empty()) {
+            int v = q.front();
+            q.pop();
+            //res.push_back(v);
+            for (auto i: adj[v]) {
+                indegree[i]--;
+                if (indegree[i] == 0)
+                    q.push(i);
+            }
+        }
+        
+        for (int i=0; i< indegree.size(); i++) {
+            if (indegree[i] > 0) 
+                return false;
+        }
+        return true;
+    }
 
 
 10. number of islands
